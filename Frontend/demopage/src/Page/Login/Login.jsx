@@ -107,7 +107,7 @@ const Login = () => {
                     ]}
                   >
                     <Input
-                      placeholder="Enter School Code"
+                      placeholder="Enter Organization Code"
                       className="h-11"
                     />
                   </Form.Item>
