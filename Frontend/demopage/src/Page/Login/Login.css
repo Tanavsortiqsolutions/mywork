@@ -1,0 +1,169 @@
+.card{
+    padding: 1%;
+}
+/* ---------- Slide + Fade Animation ---------- */
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide {
+  animation: slideFadeIn 0.35s ease-out;
+}
+
+/* ---------- Input Hover + Focus Animation ---------- */
+.animated-input {
+  transition: all 0.25s ease;
+}
+
+.animated-input:hover {
+  transform: translateY(-1px);
+}
+
+.animated-input:focus,
+.animated-input.ant-input-focused {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25); /* indigo glow */
+  border-color: #6366f1;
+}
+/* =========================
+   GLOBAL FIXES
+========================= */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* =========================
+   BACKGROUND VIDEO
+========================= */
+video {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+/* =========================
+   CARD RESPONSIVENESS
+========================= */
+.card {
+  width: 100%;
+  max-width: 420px;
+}
+
+/* =========================
+   FORM INPUTS
+========================= */
+.animated-input {
+  transition: all 0.3s ease;
+}
+
+.animated-input:focus {
+  border-color: #6366f1;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+}
+
+/* =========================
+   SMALL DEVICES (PHONES)
+========================= */
+@media (max-width: 640px) {
+
+  .relative.h-screen {
+    height: auto;
+    min-height: 100vh;
+  }
+
+  h1 {
+    font-size: 2rem !important;
+    text-align: center;
+  }
+
+  .text-xl {
+    font-size: 1rem !important;
+    text-align: center;
+  }
+
+  .lg\\:flex {
+    display: none;
+  }
+
+  .card {
+    padding: 1.5rem !important;
+    border-radius: 1rem;
+  }
+
+  .ant-form {
+    width: 100%;
+  }
+
+  .ant-btn {
+    font-size: 0.95rem;
+  }
+
+  .MuiTabs-root {
+    margin-bottom: 10px;
+  }
+}
+
+/* =========================
+   TABLETS
+========================= */
+@media (min-width: 641px) and (max-width: 1024px) {
+
+  h1 {
+    font-size: 2.5rem !important;
+  }
+
+  .card {
+    max-width: 450px;
+  }
+
+  .lg\\:flex {
+    display: none;
+  }
+
+  .ant-form {
+    max-width: 100%;
+  }
+}
+
+/* =========================
+   LAPTOPS & DESKTOPS
+========================= */
+@media (min-width: 1025px) {
+
+  .card {
+    max-width: 420px;
+  }
+
+  h1 {
+    font-size: 3rem;
+  }
+}
+
+/* =========================
+   ANIMATION (OPTIONAL)
+========================= */
+.animate-slide {
+  animation: slideDown 0.35s ease-in-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
