@@ -16,7 +16,7 @@ export default function Footer() {
               </Link>
               <p className="footer-description">
                 Simplifying administrative management for businesses of all sizes. Transform your operations with our powerful platform.
-              </p>
+              </p> 
               <div className="social-links">
                 <a href="#" className="social-icon" title="Facebook">f</a>
                 <a href="#" className="social-icon" title="Twitter">𝕏</a>

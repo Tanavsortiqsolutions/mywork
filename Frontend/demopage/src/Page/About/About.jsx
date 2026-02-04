@@ -64,7 +64,7 @@ export default function About() {
               </div>
               <div className="team-member">
                 <div className="team-avatar">👩‍💻</div>
-                <h4>Sarah Chen</h4>
+                <h4>Tanav</h4>
                 <p className="role">CTO</p>
                 <p className="bio">Full-stack architect & innovator</p>
               </div>

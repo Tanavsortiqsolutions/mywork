@@ -1,0 +1,55 @@
+.student-dashboard {
+  min-height: 100vh;
+  background: #f5f7fa;
+}
+
+.student-sider {
+  background: #ffffff;
+  border-right: 1px solid #f0f0f0;
+  padding: 16px 12px;
+  transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+.sider-header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  padding: 8px 6px;
+  margin-bottom: 8px;
+  transition: all 0.3s ease;
+}
+
+.sider-user {
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s ease;
+}
+
+.toolbar {
+  height: 60px;
+  background: #ffffff;
+  border-bottom: 1px solid #f0f0f0;
+  padding: 10px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.collapse-btn {
+  font-size: 18px;
+  color: #1890ff;
+  transition: color 0.3s ease;
+}
+
+.collapse-btn:hover {
+  color: #40a9ff;
+}
+
+.student-content {
+  padding: 24px;
+  
+}
+
+.student-content .ant-card {
+  max-width: 900px;
+}

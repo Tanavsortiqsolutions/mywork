@@ -404,6 +404,10 @@
     min-height: auto;
   }
 
+  .hero-content{
+    padding-left: 10px;
+  }
+
   .hero-title {
     font-size: 32px;
   }
@@ -422,7 +426,7 @@
   }
 
   .illustration-placeholder {
-    font-size: 80px;
+    font-size: 70px;
   }
 
   .features,
