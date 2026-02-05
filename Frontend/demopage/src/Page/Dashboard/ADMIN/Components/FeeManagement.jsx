@@ -1,7 +1,23 @@
-import React, { useState, useEffect } from 'react';
-import { Card, Table, Button, Modal, Form, Input, message, Space, Popconfirm, InputNumber } from 'antd';
+import React, { useEffect, useState } from 'react';
+import {
+  Card,
+  Table,
+  Button,
+  Modal,
+  Form,
+  Input,
+  message,
+  Space,
+  Popconfirm,
+  InputNumber,
+  Select,
+  DatePicker,
+} from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
 import axios from 'axios';
+import dayjs from 'dayjs';
+
+const { Option } = Select;
 
 const FeeManagement = () => {
   const [fees, setFees] = useState([]);
@@ -10,49 +26,74 @@ const FeeManagement = () => {
   const [editingId, setEditingId] = useState(null);
   const [form] = Form.useForm();
 
-  useEffect(() => {
-    const fetchFees = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get('/api/fees').catch(() => ({
-          data: [
-            { id: 1, studentName: 'John Doe', rollNo: 'S001', feeType: 'Tuition', amount: 5000, status: 'Paid', dueDate: '2026-01-31' },
-            { id: 2, studentName: 'Jane Smith', rollNo: 'S002', feeType: 'Hostel', amount: 3000, status: 'Pending', dueDate: '2026-02-15' },
-            { id: 3, studentName: 'Mike Johnson', rollNo: 'S003', feeType: 'Tuition', amount: 5000, status: 'Overdue', dueDate: '2026-01-20' },
-          ],
-        }));
-        setFees(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching fees:', error);
-        setLoading(false);
-      }
-    };
-    fetchFees();
-  }, []);
+  /* ----------------------------------
+     Utility: normalize API response
+  -----------------------------------*/
+  const normalizeFees = (data) => {
+    if (Array.isArray(data)) return data;
+    if (Array.isArray(data?.data)) return data.data;
+    return [];
+  };
 
-  const refetchFees = async () => {
+  /* ----------------------------------
+     Fetch Fees
+  -----------------------------------*/
+  const fetchFees = async () => {
     try {
       setLoading(true);
-      const response = await axios.get('/api/fees').catch(() => ({
-        data: [
-          { id: 1, studentName: 'John Doe', rollNo: 'S001', feeType: 'Tuition', amount: 5000, status: 'Paid', dueDate: '2026-01-31' },
-          { id: 2, studentName: 'Jane Smith', rollNo: 'S002', feeType: 'Hostel', amount: 3000, status: 'Pending', dueDate: '2026-02-15' },
-          { id: 3, studentName: 'Mike Johnson', rollNo: 'S003', feeType: 'Tuition', amount: 5000, status: 'Overdue', dueDate: '2026-01-20' },
-        ],
-      }));
-      setFees(response.data);
-      setLoading(false);
-    } catch (error) {
-      console.error('Error fetching fees:', error);
+      const res = await axios.get('/api/fees');
+      setFees(normalizeFees(res.data));
+    } catch (err) {
+      // fallback demo datac
+      console.error('Failed to fetch fees, using demo data', err);
+      setFees([
+        {
+          id: 1,
+          studentName: 'John Doe',
+          rollNo: 'S001',
+          feeType: 'Tuition',
+          amount: 5000,
+          status: 'Paid',
+          dueDate: '2026-01-31',
+        },
+        {
+          id: 2,
+          studentName: 'Jane Smith',
+          rollNo: 'S002',
+          feeType: 'Hostel',
+          amount: 3000,
+          status: 'Pending',
+          dueDate: '2026-02-15',
+        },
+        {
+          id: 3,
+          studentName: 'Mike Johnson',
+          rollNo: 'S003',
+          feeType: 'Transport',
+          amount: 2000,
+          status: 'Overdue',
+          dueDate: '2026-01-20',
+        },
+      ]);
+    } finally {
       setLoading(false);
     }
   };
 
+  useEffect(() => {
+    fetchFees();
+  }, []);
+
+  /* ----------------------------------
+     Modal Handlers
+  -----------------------------------*/
   const showModal = (record = null) => {
     if (record) {
       setEditingId(record.id);
-      form.setFieldsValue(record);
+      form.setFieldsValue({
+        ...record,
+        dueDate: dayjs(record.dueDate),
+      });
     } else {
       setEditingId(null);
       form.resetFields();
@@ -66,100 +107,95 @@ const FeeManagement = () => {
     form.resetFields();
   };
 
+  /* ----------------------------------
+     Submit Form
+  -----------------------------------*/
   const handleSubmit = async (values) => {
+    const payload = {
+      ...values,
+      dueDate: values.dueDate.format('YYYY-MM-DD'),
+    };
+
     try {
       if (editingId) {
-        await axios.put(`/api/fees/${editingId}`, values).catch(() => {
-          setFees(fees.map((fee) => (fee.id === editingId ? { ...fee, ...values } : fee)));
+        await axios.put(`/api/fees/${editingId}`, payload).catch(() => {
+          setFees((prev) =>
+            prev.map((fee) =>
+              fee.id === editingId ? { ...fee, ...payload } : fee
+            )
+          );
         });
         message.success('Fee updated successfully');
       } else {
-        const newFee = { id: Date.now(), ...values };
-        await axios.post('/api/fees', values).catch(() => {
-          setFees([...fees, newFee]);
+        const newFee = { id: Date.now(), ...payload };
+        await axios.post('/api/fees', payload).catch(() => {
+          setFees((prev) => [...prev, newFee]);
         });
-        message.success('Fee created successfully');
+        message.success('Fee added successfully');
       }
-      setIsModalVisible(false);
-      setEditingId(null);
-      form.resetFields();
-      refetchFees();
+      handleCancel();
+      fetchFees();
     } catch (error) {
-      console.error('Error saving fee:', error);
-      message.error('Failed to save fee');
+      console.error('Failed to save fee', error);
     }
   };
 
+  /* ----------------------------------
+     Delete Fee
+  -----------------------------------*/
   const handleDelete = async (id) => {
     try {
       await axios.delete(`/api/fees/${id}`).catch(() => {
-        setFees(fees.filter((fee) => fee.id !== id));
+        setFees((prev) => prev.filter((fee) => fee.id !== id));
       });
       message.success('Fee deleted successfully');
-      refetchFees();
-    } catch (error) {
-      console.error('Error deleting fee:', error);
+    } catch {
       message.error('Failed to delete fee');
     }
   };
 
+  /* ----------------------------------
+     Table Columns
+  -----------------------------------*/
   const columns = [
-    {
-      title: 'Student Name',
-      dataIndex: 'studentName',
-      key: 'studentName',
-    },
-    {
-      title: 'Roll No',
-      dataIndex: 'rollNo',
-      key: 'rollNo',
-    },
-    {
-      title: 'Fee Type',
-      dataIndex: 'feeType',
-      key: 'feeType',
-    },
+    { title: 'Student Name', dataIndex: 'studentName' },
+    { title: 'Roll No', dataIndex: 'rollNo' },
+    { title: 'Fee Type', dataIndex: 'feeType' },
     {
       title: 'Amount',
       dataIndex: 'amount',
-      key: 'amount',
-      render: (amount) => `$${amount}`,
+      render: (amount) => `₹${amount}`,
     },
     {
       title: 'Status',
       dataIndex: 'status',
-      key: 'status',
       render: (status) => {
-        const colors = { Paid: '#52c41a', Pending: '#faad14', Overdue: '#f5222d' };
+        const colors = {
+          Paid: '#52c41a',
+          Pending: '#faad14',
+          Overdue: '#f5222d',
+        };
         return <span style={{ color: colors[status] }}>{status}</span>;
       },
     },
-    {
-      title: 'Due Date',
-      dataIndex: 'dueDate',
-      key: 'dueDate',
-    },
+    { title: 'Due Date', dataIndex: 'dueDate' },
     {
       title: 'Actions',
-      key: 'actions',
       render: (_, record) => (
         <Space>
           <Button
-            type="primary"
             size="small"
+            type="primary"
             icon={<EditOutlined />}
             onClick={() => showModal(record)}
           >
             Edit
           </Button>
           <Popconfirm
-            title="Delete Fee"
-            description="Are you sure you want to delete this fee?"
+            title="Delete Fee?"
             onConfirm={() => handleDelete(record.id)}
-            okText="Yes"
-            cancelText="No"
           >
-            <Button danger size="small" icon={<DeleteOutlined />}>
+            <Button size="small" danger icon={<DeleteOutlined />}>
               Delete
             </Button>
           </Popconfirm>
@@ -168,90 +204,89 @@ const FeeManagement = () => {
     },
   ];
 
+  /* ----------------------------------
+     Render
+  -----------------------------------*/
   return (
-    <div className="fee-management">
-      <Card
-        title="Student Fee Management"
-        extra={
-          <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()}>
-            Add Fee
-          </Button>
-        }
-        style={{ borderRadius: '8px' }}
-      >
-        <Table
-          columns={columns}
-          dataSource={fees}
-          rowKey="id"
-          loading={loading}
-          pagination={{ pageSize: 10 }}
-          bordered
-        />
-      </Card>
+    <Card
+      title="Student Fee Management"
+      extra={
+        <Button type="primary" icon={<PlusOutlined />} onClick={() => showModal()}>
+          Add Fee
+        </Button>
+      }
+    >
+      <Table
+        rowKey="id"
+        columns={columns}
+        dataSource={fees}
+        loading={loading}
+        bordered
+        pagination={{ pageSize: 5 }}
+      />
 
       <Modal
-        title={editingId ? 'Edit Fee' : 'Add New Fee'}
+        title={editingId ? 'Edit Fee' : 'Add Fee'}
         open={isModalVisible}
-        onOk={() => form.submit()}
         onCancel={handleCancel}
+        onOk={() => form.submit()}
         width={600}
       >
-        <Form
-          form={form}
-          layout="vertical"
-          onFinish={handleSubmit}
-          labelCol={{ span: 24 }}
-        >
+        <Form form={form} layout="vertical" onFinish={handleSubmit}>
           <Form.Item
             name="studentName"
             label="Student Name"
-            rules={[{ required: true, message: 'Please enter student name' }]}
+            rules={[{ required: true }]}
           >
-            <Input placeholder="e.g., John Doe" />
+            <Input />
           </Form.Item>
 
           <Form.Item
             name="rollNo"
             label="Roll Number"
-            rules={[{ required: true, message: 'Please enter roll number' }]}
+            rules={[{ required: true }]}
           >
-            <Input placeholder="e.g., S001" />
+            <Input />
           </Form.Item>
 
           <Form.Item
             name="feeType"
             label="Fee Type"
-            rules={[{ required: true, message: 'Please enter fee type' }]}
+            rules={[{ required: true }]}
           >
-            <Input placeholder="e.g., Tuition, Hostel, Transport" />
+            <Input />
           </Form.Item>
 
           <Form.Item
             name="amount"
             label="Amount"
-            rules={[{ required: true, message: 'Please enter amount' }]}
+            rules={[{ required: true }]}
           >
-            <InputNumber min={0} placeholder="e.g., 5000" style={{ width: '100%' }} />
-          </Form.Item>
-
-          <Form.Item
-            name="dueDate"
-            label="Due Date"
-            rules={[{ required: true, message: 'Please enter due date' }]}
-          >
-            <Input type="date" />
+            <InputNumber min={0} style={{ width: '100%' }} />
           </Form.Item>
 
           <Form.Item
             name="status"
             label="Status"
-            rules={[{ required: true, message: 'Please select status' }]}
+            rules={[{ required: true }]}
           >
-            <Input placeholder="e.g., Paid, Pending, Overdue" />
+            <Select>
+              <Option value="Paid">Paid</Option>
+              <Option value="Pending">Pending</Option>
+              <Option value="Overdue">Overdue</Option>
+            </Select>
+          </Form.Item>
+
+          <Form.Item
+            name="dueDate"
+            label="Due Date"
+            rules={[{ required: true }]}
+          >
+            <DatePicker style={{ width: '100%' }} />
           </Form.Item>
         </Form>
       </Modal>
-    </div>
+    </Card>
   );
 };
 

@@ -20,6 +20,7 @@ import FeeManagement from './Components/FeeManagement';
 import SalaryManagement from './Components/SalaryManagement';
 import NoticeManagement from './Components/NoticeManagement';
 import AnnouncementManagement from './Components/AnnouncementManagement';
+import AddUser from './Components/AddUser';
 import './AdminPannel.css';
 
 const { Header, Sider, Content } = Layout;
@@ -64,6 +65,11 @@ const AdminPannel = () => {
       icon: <NotificationOutlined />,
       label: 'Announcements',
     },
+    {
+      key: 'AddUser',
+      icon: <UserOutlined />,
+      label: 'Add User',
+    }
   ];
 
   const renderContent = () => {
@@ -82,8 +88,11 @@ const AdminPannel = () => {
         return <NoticeManagement />;
       case 'announcements':
         return <AnnouncementManagement />;
+      case 'AddUser':
+        return <AddUser />;
       default:
         return <AdminDashboard />;
+
     }
   };
 

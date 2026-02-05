@@ -1,5 +1,6 @@
 import React from 'react';
 import './Landing.css';
+import Module from '../Module/Module.jsx';
 
 export default function Landing() {
   const features = [
@@ -99,6 +100,7 @@ export default function Landing() {
         </div>
       </section>
 
+     
       {/* Who It's For Section */}
       <section className="who-for">
         <div className="container">
@@ -125,6 +127,12 @@ export default function Landing() {
               <p>Collaborate seamlessly across time zones with cloud-based administration tools</p>
             </div>
           </div>
+        </div>
+      </section>
+  {/* Module Section */}
+      <section className="module-section">
+        <div className="container">
+          <Module />
         </div>
       </section>
 
