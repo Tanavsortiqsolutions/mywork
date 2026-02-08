@@ -1,10 +1,16 @@
 import React from 'react';
-import Landing from './Landing.jsx';
+
+import WhyChooseus from './WhyChooseus';
+import HomeFeature from './HomeFeature';
+import HeroSection from './hero';
+
 
 export default function Home() {
   return (
     <div>
-      <Landing />
+      <HeroSection />
+      <HomeFeature />
+     < WhyChooseus />
     </div>
   );
 }
