@@ -15,7 +15,7 @@
   "@mui/icons-material": "^7.3.7",
   "@mui/material": "^7.3.7",
   "@tailwindcss/vite": "^4.1.18",
-  "@tailwindcss/corner-shape": "^0.0.8",
+
   "animejs": "^4.3.5",
   "antd": "^6.2.2",
   "country-list-with-dial-code-and-flag": "^5.1.1",
