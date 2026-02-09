@@ -4,60 +4,52 @@ import "./Feature.css";
 
 const features = [
   {
-    id: 1,
     title: "Real Time Analytics",
     description:
       "Task performance metrics and KPI in real time with comprehensive dashboards and reports",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/combo-chart--v1.png",
+    icon: "https://img.icons8.com/ios-filled/100/combo-chart--v1.png",
   },
   {
-    id: 2,
     title: "User Friendly Interface",
     description:
-      "Intuitive and user-friendly interface designed for easy navigation and seamless user experience",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/user.png",
+      "Intuitive and user-friendly interface designed for easy navigation and seamless experience",
+    icon: "https://img.icons8.com/ios-filled/100/user.png",
   },
   {
-    id: 3,
     title: "Schedule Management",
     description:
-      "Efficiently manage and schedule tasks with our built-in calendar and scheduling tools",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/calendar.png",
+      "Efficiently manage and schedule tasks with built-in calendar tools",
+    icon: "https://img.icons8.com/ios-filled/100/calendar.png",
   },
   {
-    id: 4,
     title: "Performance Tracking",
     description:
-      "Track and monitor task performance with detailed analytics and insights to optimize productivity",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/combo-chart.png",
+      "Track and monitor task performance with detailed analytics",
+    icon: "https://img.icons8.com/ios-filled/100/combo-chart.png",
   },
   {
-    id: 5,
     title: "Security & Compliance",
     description:
-      "Robust security measures and compliance with industry standards to protect your data",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/lock--v1.png",
+      "Robust security and compliance with industry standards",
+    icon: "https://img.icons8.com/ios-filled/100/lock--v1.png",
   },
   {
-    id: 6,
     title: "Customization & Integration",
     description:
-      "Easily customize and integrate with your existing tools and workflows",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/settings.png",
+      "Easily integrate with your existing tools and workflows",
+    icon: "https://img.icons8.com/ios-filled/100/settings.png",
   },
   {
-    id: 7,
     title: "Collaboration & Communication",
     description:
       "Built-in messaging and collaboration features for teams",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/collaborator.png",
+    icon: "https://img.icons8.com/ios-filled/100/collaborator.png",
   },
   {
-    id: 8,
     title: "Mobile Accessibility",
     description:
       "Access tasks anywhere with a fully mobile-responsive design",
-    icon: "https://img.icons8.com/ios-filled/100/ffffff/smartphone.png",
+    icon: "https://img.icons8.com/ios-filled/100/smartphone.png",
   },
 ];
 
@@ -67,8 +59,8 @@ const HomeFeature = () => {
   useEffect(() => {
     const ctx = gsap.context(() => {
       gsap.to(trackRef.current, {
-        x: "-50%",
-        duration: 30,
+        xPercent: -50,
+        duration: 5,
         repeat: -1,
         ease: "linear",
       });
@@ -79,24 +71,11 @@ const HomeFeature = () => {
 
   return (
     <section className="feature-section">
-      {/* Background images */}
-      <div className="bg-images">
-        {[1, 2, 3].map((i) => (
-          <img
-            key={i}
-            src={`https://source.unsplash.com/800x600/?technology,office,education&sig=${i}`}
-            alt="background"
-          />
-        ))}
-      </div>
-
-      {/* Header */}
       <div className="feature-header">
         <h2>Powerful Features</h2>
         <p>Everything you need to run your institution smarter</p>
       </div>
 
-      {/* Slider */}
       <div className="slider">
         <div className="slider-track" ref={trackRef}>
           {[...features, ...features].map((item, index) => (

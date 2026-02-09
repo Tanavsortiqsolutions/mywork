@@ -16,9 +16,11 @@ import Login from "./Page/Login/Login";
 // Dashboards
 import Student from "./Page/Dashboard/Student/Student";
 
-// // Super Admin
-import SuperAdmin from "./Page/Dashboard/SUPERADMIN/SuperAdmin.jsx";
+// // 
+import SuperAdmin from "./Page/Dashboard/SUPERADMIN/SUPERADMIN.jsx";
 
+
+import MasterPannel from "./MasterPannelDashboard/MasterPannel.jsx";  
 
 const router = createBrowserRouter([
   {
@@ -43,7 +45,7 @@ const router = createBrowserRouter([
   {path: "/SuperAdmin", element: <SuperAdmin />},
   // { path: "/manager", element: <Manager /> },
   // { path: "/accountant", element: <Accountant /> },
-
+ {path: "/masterpanel", element: <MasterPannel />},
   // Super Admin
   // { path: "/superadmin", element: <SuperAdmin /> },
 ]);

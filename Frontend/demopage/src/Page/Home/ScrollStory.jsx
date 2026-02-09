@@ -1,73 +1,77 @@
-import React from "react";
-import "./ScrollStory.css";
+import { motion } from "framer-motion";
+import "./StorySection.css";
 
-const scrollSections = [
+const stories = [
   {
-    image: "../../../assets/1.png",
     title: "Powerful Administrative Features",
-    points: [
+    text: [
       "Role-based access & permissions",
       "Attendance & biometric integration",
       "Academic, HR & finance modules",
       "Complete operational control",
     ],
+    image: "https://img.icons8.com/color/256/admin-settings-male.png",
   },
- 
   {
-    image: "../../asseys/2.png",
     title: "Built for Schools & Colleges",
-    points: [
+    text: [
       "Student lifecycle management",
       "Exams, attendance & fees",
       "Parent & staff portals",
       "Academic compliance",
     ],
+    image: "https://img.icons8.com/color/256/school.png",
   },
   {
-    image: "../../asseys/3.png",
     title: "Government Institutions",
-    points: [
+    text: [
       "Secure workflows",
       "Audit-ready reporting",
       "Document management",
       "Centralized control",
     ],
-  },
-  {
-    image: "../../asseys/4.png",
-    title: "Corporate Organizations",
-    points: [
-      "HR & payroll automation",
-      "Attendance & performance",
-      "Multi-branch operations",
-      "Data-driven decisions",
-    ],
+    image: "https://img.icons8.com/color/256/government.png",
   },
 ];
 
-const ScrollStory = () => {
+export default function StorySection() {
   return (
-    <section className="scroll-story">
-      <div className="story-grid">
-        {scrollSections.map((item, i) => (
-          <div className="story-card" key={i}>
-            <div className="story-image">
-              <img src={item.image} alt={item.title} />
-            </div>
+    <section className="story-dark">
+      <h2 className="story-heading">
+        Why <span>Choose Us</span>
+      </h2>
+      <p className="story-subheading">
+        Designed to simplify, scale, and secure your institution
+      </p>
 
+      {stories.map((item, index) => {
+        const isLeft = index % 2 === 0;
+
+        return (
+          <motion.div
+            key={index}
+            className={`story-card ${isLeft ? "left" : "right"}`}
+            initial={{ opacity: 0, x: isLeft ? -120 : 120 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: isLeft ? -120 : 120 }}
+            transition={{ duration: 0.9, ease: "easeInOut" }}
+            viewport={{ amount: 0.6 }} // 🔥 reversible
+          >
             <div className="story-content">
-              <h2>{item.title}</h2>
+              <h3>{item.title}</h3>
               <ul>
-                {item.points.map((p, idx) => (
-                  <li key={idx}>✔ {p}</li>
+                {item.text.map((point, i) => (
+                  <li key={i}>✓ {point}</li>
                 ))}
               </ul>
             </div>
-          </div>
-        ))}
-      </div>
+
+            <div className="story-image">
+              <img src={item.image} alt={item.title} />
+            </div>
+          </motion.div>
+        );
+      })}
     </section>
   );
-};
-
-export default ScrollStory;
+}
