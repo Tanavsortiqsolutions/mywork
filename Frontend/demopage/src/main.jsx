@@ -12,7 +12,7 @@ import About from "./Page/About/About";
 import Contact from "./Page/Contact/Contact";
 import Login from "./Page/Login/Login";
 import Blog from "./Page/Blog/Blog";
-
+import Parent from "./Page/Dashboard/Parent/Parent";
 // Dashboards
 import Student from "./Page/Dashboard/Student/Student";
 
@@ -44,6 +44,7 @@ const router = createBrowserRouter([
   // { path: "/manager", element: <Manager /> },
   // { path: "/accountant", element: <Accountant /> },
  {path: "/masterpanel", element: <MasterPannel />},
+ {path: "/parent", element: <Parent />},
   // Super Admin
   // { path: "/superadmin", element: <SuperAdmin /> },
 ]);

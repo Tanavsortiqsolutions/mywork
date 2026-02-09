@@ -1,23 +1,55 @@
-const mongoose = require(`mongoose`);
-const express = require ('express');
-const routes = require(``);
-const bend = express();
- const http = require('http').Server(bend)
- const cors = require(`cors`);
+// 🔹 Load environment variables FIRST
+require('dotenv').config();
 
-bend.use(express.json())
+const express = require('express');
+const mongoose = require('mongoose');
+const cors = require('cors');
+const http = require('http');
 
-bend.use(cors({
-    origin: "http://localhost:5173",
-    methods: ["GET","POST","DELETE","UPDATE","HEAD","PUT","PATCH"],
-}))
+// 🔹 Import routes
+const authRoutes = require('./routes/api/Auth.Route'); // existing auth
+// later you will add:
+// const masterAuthRoutes = require('./routes/masterAuth.route');
 
-bend.use("api", routes)
+const app = express();
+const server = http.createServer(app);
 
+// 🔹 Middleware
+app.use(express.json());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE','UPDATE'],
+  credentials: true
+}));
 
-then(()=>{
-    const PORT=5003
-    http.listen(PORT,()=>{
-         console.log(`Server is running on port ${PORT}`);
-    })
-})
+// 🔹 Health check (very important for SaaS)
+app.get('/', (req, res) => {
+  res.send('🚀 SaaS Backend is running');
+});
+
+// 🔹 Routes
+app.use('/api', authRoutes);
+// app.use('/api/master', masterAuthRoutes); // will enable later
+
+// 🔹 Database connection + server start
+mongoose
+  .connect(process.env.MONGO_URI)
+  .then(() => {
+    const PORT = process.env.PORT || 5003;
+    server.listen(PORT, () => {
+      console.log(`🚀 Server is running on port ${PORT}`);
+      console.log('✅ Connected to MongoDB Atlas');
+    });
+  })
+  .catch((err) => {
+    console.error('❌ MongoDB connection failed:', err);
+  });
+
+// 🔹 Global error handler (SaaS best practice)
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({
+    success: false,
+    message: 'Internal Server Error'
+  });
+});

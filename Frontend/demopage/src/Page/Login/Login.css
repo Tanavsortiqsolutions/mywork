@@ -1,163 +1,150 @@
-.card{
-    padding: 1%;
-}
-/* ---------- Slide + Fade Animation ---------- */
-@keyframes slideFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+/* ================= ROOT ================= */
+.login-root {
+  position: relative;
+  min-height: 100vh;
+  overflow: hidden;
 }
 
-.animate-slide {
-  animation: slideFadeIn 0.35s ease-out;
-}
-
-/* ---------- Input Hover + Focus Animation ---------- */
-.animated-input {
-  transition: all 0.25s ease;
-}
-
-.animated-input:hover {
-  transform: translateY(-1px);
-}
-
-.animated-input:focus,
-.animated-input.ant-input-focused {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(99, 102, 241, 0.25); /* indigo glow */
-  border-color: #6366f1;
-}
-/* =========================
-   GLOBAL FIXES
-========================= */
 * {
   box-sizing: border-box;
 }
 
-html, body {
+/* ================= VIDEO ================= */
+.login-video {
+  position: absolute;
+  inset: 0;
   width: 100%;
-  overflow-x: hidden;
+  height: 100%;
+  object-fit: cover;
 }
 
-/* =========================
-   BACKGROUND VIDEO
-========================= */
-video {
-  min-width: 100%;
-  min-height: 100%;
+.login-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
 }
 
-/* =========================
-   CARD RESPONSIVENESS
-========================= */
-.card {
+/* ================= CONTAINER ================= */
+.login-container {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.login-grid {
+  width: 100%;
+  max-width: 1200px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 4rem;
+  align-items: center;
+}
+
+/* ================= LEFT ================= */
+.login-left {
+  color: #fff;
+}
+
+.login-left h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+
+.login-left .tagline {
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
+  color: #c7d2fe;
+}
+
+.login-left .desc {
+  margin-top: 1rem;
+  color: #e5e7eb;
+  max-width: 520px;
+}
+
+.divider {
+  display: block;
+  width: 90px;
+  height: 4px;
+  background: #818cf8;
+  margin-top: 2rem;
+  border-radius: 999px;
+}
+
+/* ================= CARD ================= */
+.login-right {
+  display: flex;
+  justify-content: center;
+}
+
+.login-card {
   width: 100%;
   max-width: 420px;
+  background: rgba(255, 255, 255, 0.95);
+  -webkit-backdrop-filter: blur(14px);
+  backdrop-filter: blur(14px);
+  border-radius: 1.25rem;
+  padding: 2rem;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+  overflow: hidden;
 }
 
-/* =========================
-   FORM INPUTS
-========================= */
-.animated-input {
-  transition: all 0.3s ease;
+.login-card h2 {
+  text-align: center;
+  font-size: 1.75rem;
+  color: #4f46e5;
+  font-weight: 700;
 }
 
-.animated-input:focus {
+.role-text {
+  text-align: center;
+  margin: 0.25rem 0 1.5rem;
+  color: #6b7280;
+}
+
+/* ================= INPUTS ================= */
+.input {
+  height: 44px;
+  transition: all 0.25s ease;
+}
+
+.input:focus,
+.input.ant-input-focused {
   border-color: #6366f1;
-  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.3);
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.25);
 }
 
-/* =========================
-   SMALL DEVICES (PHONES)
-========================= */
-@media (max-width: 640px) {
-
-  .relative.h-screen {
-    height: auto;
-    min-height: 100vh;
-  }
-
-  h1 {
-    font-size: 2rem !important;
-    text-align: center;
-  }
-
-  .text-xl {
-    font-size: 1rem !important;
-    text-align: center;
-  }
-
-  .lg\\:flex {
-    display: none;
-  }
-
-  .card {
-    padding: 1.5rem !important;
-    border-radius: 1rem;
-  }
-
-  .ant-form {
-    width: 100%;
-  }
-
-  .ant-btn {
-    font-size: 0.95rem;
-  }
-
-  .MuiTabs-root {
-    margin-bottom: 10px;
-  }
+/* ================= CAPTCHA ================= */
+.captcha-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0;
+  transform: scale(0.92);
+  transform-origin: center;
 }
 
-/* =========================
-   TABLETS
-========================= */
-@media (min-width: 641px) and (max-width: 1024px) {
-
-  h1 {
-    font-size: 2.5rem !important;
-  }
-
-  .card {
-    max-width: 450px;
-  }
-
-  .lg\\:flex {
-    display: none;
-  }
-
-  .ant-form {
-    max-width: 100%;
-  }
+/* ================= BUTTON ================= */
+.login-btn {
+  width: 100%;
+  height: 44px;
+  background: #4f46e5 !important;
+  border-radius: 0.5rem;
+  font-size: 1rem;
 }
 
-/* =========================
-   LAPTOPS & DESKTOPS
-========================= */
-@media (min-width: 1025px) {
-
-  .card {
-    max-width: 420px;
-  }
-
-  h1 {
-    font-size: 3rem;
-  }
+.login-btn:hover {
+  background: #4338ca !important;
 }
 
-/* =========================
-   ANIMATION (OPTIONAL)
-========================= */
+/* ================= ANIMATION ================= */
 .animate-slide {
-  animation: slideDown 0.35s ease-in-out;
+  animation: slideFade 0.35s ease-out;
 }
 
-@keyframes slideDown {
+@keyframes slideFade {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -165,5 +152,26 @@ video {
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 1024px) {
+  .login-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .login-left {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 1.5rem;
+  }
+
+  .captcha-wrap {
+    transform: scale(0.85);
   }
 }
