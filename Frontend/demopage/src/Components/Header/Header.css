@@ -50,7 +50,7 @@
 .nav-menu {
   display: flex;
   list-style: none;
-  gap: 40px;
+  gap: 10px;
   align-items: center;
 }
 

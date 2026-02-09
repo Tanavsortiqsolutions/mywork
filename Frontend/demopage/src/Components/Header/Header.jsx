@@ -45,6 +45,9 @@ export default function Header() {
               <Link to="/module" className="nav-link" onClick={closeMenu}>Modules</Link>
             </li>
             <li className="nav-item">
+              <Link to="/blog" className="nav-link" onClick={closeMenu}>Blog</Link>
+            </li>
+            <li className="nav-item">
               <Link to="/login" className="nav-link lg:hidden md:hidden " onClick={closeMenu}>Login</Link>
             </li>
           </ul>

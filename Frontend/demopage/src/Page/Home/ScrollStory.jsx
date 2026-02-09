@@ -30,7 +30,7 @@ const stories = [
       "Document management",
       "Centralized control",
     ],
-    image: "https://img.icons8.com/color/256/government.png",
+    image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT3UUxB5JFyVGf4BVa3MKEIEO184Gk2_HuJIw&s",
   },
 ];
 

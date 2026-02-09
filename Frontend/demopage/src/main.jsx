@@ -11,7 +11,7 @@ import Module from "./Page/Module/Module";
 import About from "./Page/About/About";
 import Contact from "./Page/Contact/Contact";
 import Login from "./Page/Login/Login";
-
+import Blog from "./Page/Blog/Blog";
 
 // Dashboards
 import Student from "./Page/Dashboard/Student/Student";
@@ -33,14 +33,12 @@ const router = createBrowserRouter([
       { path: "about", element: <About /> },
       { path: "contact", element: <Contact /> },
       {path :"module", element: <Module />},
+      { path: "blog", element: <Blog /> },
        { path: "/login", element: <Login /> },
     ],
   },
 
-  // No layout pages
- 
 
-  // Dashboards
   { path: "/student", element: <Student /> },
   {path: "/SuperAdmin", element: <SuperAdmin />},
   // { path: "/manager", element: <Manager /> },

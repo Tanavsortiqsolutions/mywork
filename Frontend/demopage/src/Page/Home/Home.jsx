@@ -6,6 +6,7 @@ import HeroSection from './hero';
 import CTA from './CTA/CTA';
 import StorySection from './ScrollStory';
 import WhoItsFor from './WhoItsFor';
+import QuesAns from './QuesAns';
 
 
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
        <StorySection />
       <HomeFeature />
       <CTA />
+      <QuesAns />
     </div>
   );
 }
