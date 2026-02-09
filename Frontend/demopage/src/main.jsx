@@ -17,7 +17,7 @@ import Login from "./Page/Login/Login";
 import Student from "./Page/Dashboard/Student/Student";
 
 // // 
-import SuperAdmin from "./Page/Dashboard/SUPERADMIN/SUPERADMIN.jsx";
+import SuperAdmin from "./Page/Dashboard/SUPERADMIN/SuperAdmin.jsx";
 
 
 import MasterPannel from "./MasterPannelDashboard/MasterPannel.jsx";  
